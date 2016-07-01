@@ -243,7 +243,10 @@ abstract class Generator extends Model
             $values[$name] = $this->$name;
         }
         $path = $this->getStickyDataFile();
-        @mkdir(dirname($path), 0755, true);
+        $dirPath = dirname($path);
+        if (!file_exists($dirPath)) {
+            @mkdir($dirPath, 0755, true);
+        }
         file_put_contents($path, json_encode($values));
     }
 
